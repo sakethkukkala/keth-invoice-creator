@@ -1,11 +1,9 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import { useState } from 'react'
 import Navbar from './components/Navbar'
 import Dashboard from './pages/Dashboard'
 import CreateInvoice from './pages/CreateInvoice'
 import InvoiceList from './pages/InvoiceList'
 import { InvoiceProvider } from './context/InvoiceContext'
-import { Invoice } from './types/invoice'
 
 function App() {
   return (
