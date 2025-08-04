@@ -105,8 +105,8 @@ const CreateInvoice = () => {
   const { subtotal, taxAmount, total } = calculateTotals();
 
   return (
-    <div className="max-w-4xl mx-auto">
-      <div className="flex items-center justify-between mb-8">
+    <div className="max-w-4xl mx-auto px-4 sm:px-0 slide-up">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 sm:mb-8 gap-4 bounce-in">
         <div className="flex items-center space-x-4">
           <button
             onClick={() => navigate('/')}
@@ -115,15 +115,15 @@ const CreateInvoice = () => {
             <ArrowLeft size={16} />
             <span>Back</span>
           </button>
-          <h1 className="text-3xl font-bold text-gray-900">Create Invoice</h1>
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Create Invoice</h1>
         </div>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-8">
+      <form onSubmit={handleSubmit} className="space-y-6 sm:space-y-8">
         {/* Invoice Details */}
-        <div className="bg-white p-6 rounded-lg shadow-sm border">
-          <h2 className="text-xl font-semibold text-gray-900 mb-4">Invoice Details</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="card p-4 sm:p-6" style={{ animationDelay: '0.1s' }}>
+          <h2 className="text-lg sm:text-xl font-semibold text-gray-900 mb-4">Invoice Details</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 Invoice Number
@@ -177,8 +177,8 @@ const CreateInvoice = () => {
         </div>
 
         {/* Client Information */}
-        <div className="bg-white p-6 rounded-lg shadow-sm border">
-          <h2 className="text-xl font-semibold text-gray-900 mb-4">Client Information</h2>
+        <div className="card p-4 sm:p-6" style={{ animationDelay: '0.2s' }}>
+          <h2 className="text-lg sm:text-xl font-semibold text-gray-900 mb-4">Client Information</h2>
           <div className="space-y-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -220,13 +220,13 @@ const CreateInvoice = () => {
         </div>
 
         {/* Invoice Items */}
-        <div className="bg-white p-6 rounded-lg shadow-sm border">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-xl font-semibold text-gray-900">Invoice Items</h2>
+        <div className="card p-4 sm:p-6" style={{ animationDelay: '0.3s' }}>
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 gap-4">
+            <h2 className="text-lg sm:text-xl font-semibold text-gray-900">Invoice Items</h2>
             <button
               type="button"
               onClick={addItem}
-              className="btn-primary flex items-center space-x-2"
+              className="btn-primary flex items-center justify-center sm:justify-start space-x-2 w-full sm:w-auto"
             >
               <Plus size={16} />
               <span>Add Item</span>
@@ -235,64 +235,70 @@ const CreateInvoice = () => {
 
           <div className="space-y-4">
             {formData.items.map((item, index) => (
-              <div key={item.id} className="grid grid-cols-12 gap-4 items-end">
-                <div className="col-span-6">
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Description
-                  </label>
-                  <input
-                    type="text"
-                    value={item.description}
-                    onChange={(e) => updateItem(index, 'description', e.target.value)}
-                    className="input-field"
-                    placeholder="Item description"
-                    required
-                  />
-                </div>
-                <div className="col-span-2">
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Quantity
-                  </label>
-                  <input
-                    type="number"
-                    value={item.quantity}
-                    onChange={(e) => updateItem(index, 'quantity', parseInt(e.target.value) || 0)}
-                    className="input-field"
-                    min="1"
-                    required
-                  />
-                </div>
-                <div className="col-span-2">
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Unit Price
-                  </label>
-                  <input
-                    type="number"
-                    value={item.unitPrice}
-                    onChange={(e) => updateItem(index, 'unitPrice', parseFloat(e.target.value) || 0)}
-                    className="input-field"
-                    min="0"
-                    step="0.01"
-                    required
-                  />
-                </div>
-                <div className="col-span-1">
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Amount
-                  </label>
-                  <div className="px-3 py-2 bg-gray-50 border border-gray-300 rounded-lg">
-                    ${item.amount.toFixed(2)}
+              <div 
+                key={item.id} 
+                className="border border-gray-200 rounded-lg p-4 hover:bg-gray-50 transition-colors duration-200"
+                style={{ animationDelay: `${0.4 + index * 0.1}s` }}
+              >
+                <div className="grid grid-cols-1 sm:grid-cols-12 gap-4 items-end">
+                  <div className="sm:col-span-6">
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Description
+                    </label>
+                    <input
+                      type="text"
+                      value={item.description}
+                      onChange={(e) => updateItem(index, 'description', e.target.value)}
+                      className="input-field"
+                      placeholder="Item description"
+                      required
+                    />
                   </div>
-                </div>
-                <div className="col-span-1">
-                  <button
-                    type="button"
-                    onClick={() => removeItem(index)}
-                    className="btn-secondary p-2 text-red-600 hover:text-red-700"
-                    disabled={formData.items.length === 1}
-                  >
-                    <Trash2 size={16} />
-                  </button>
+                  <div className="sm:col-span-2">
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Quantity
+                    </label>
+                    <input
+                      type="number"
+                      value={item.quantity}
+                      onChange={(e) => updateItem(index, 'quantity', parseInt(e.target.value) || 0)}
+                      className="input-field"
+                      min="1"
+                      required
+                    />
+                  </div>
+                  <div className="sm:col-span-2">
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Unit Price
+                    </label>
+                    <input
+                      type="number"
+                      value={item.unitPrice}
+                      onChange={(e) => updateItem(index, 'unitPrice', parseFloat(e.target.value) || 0)}
+                      className="input-field"
+                      min="0"
+                      step="0.01"
+                      required
+                    />
+                  </div>
+                  <div className="sm:col-span-1">
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Amount
+                    </label>
+                    <div className="px-3 py-2 bg-gray-50 border border-gray-300 rounded-lg text-sm">
+                      ${item.amount.toFixed(2)}
+                    </div>
+                  </div>
+                  <div className="sm:col-span-1">
+                    <button
+                      type="button"
+                      onClick={() => removeItem(index)}
+                      className="btn-secondary p-2 text-red-600 hover:text-red-700 w-full"
+                      disabled={formData.items.length === 1}
+                    >
+                      <Trash2 size={16} />
+                    </button>
+                  </div>
                 </div>
               </div>
             ))}
@@ -300,8 +306,8 @@ const CreateInvoice = () => {
         </div>
 
         {/* Notes */}
-        <div className="bg-white p-6 rounded-lg shadow-sm border">
-          <h2 className="text-xl font-semibold text-gray-900 mb-4">Notes</h2>
+        <div className="card p-4 sm:p-6" style={{ animationDelay: '0.5s' }}>
+          <h2 className="text-lg sm:text-xl font-semibold text-gray-900 mb-4">Notes</h2>
           <textarea
             value={formData.notes}
             onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
@@ -312,8 +318,8 @@ const CreateInvoice = () => {
         </div>
 
         {/* Totals */}
-        <div className="bg-white p-6 rounded-lg shadow-sm border">
-          <h2 className="text-xl font-semibold text-gray-900 mb-4">Summary</h2>
+        <div className="card p-4 sm:p-6" style={{ animationDelay: '0.6s' }}>
+          <h2 className="text-lg sm:text-xl font-semibold text-gray-900 mb-4">Summary</h2>
           <div className="space-y-2 text-right">
             <div className="flex justify-between">
               <span className="text-gray-600">Subtotal:</span>
@@ -325,21 +331,21 @@ const CreateInvoice = () => {
             </div>
             <div className="flex justify-between text-lg font-bold border-t pt-2">
               <span>Total:</span>
-              <span>${total.toFixed(2)}</span>
+              <span className="text-primary-600">${total.toFixed(2)}</span>
             </div>
           </div>
         </div>
 
         {/* Submit Button */}
-        <div className="flex justify-end space-x-4">
+        <div className="flex flex-col sm:flex-row justify-end gap-4" style={{ animationDelay: '0.7s' }}>
           <button
             type="button"
             onClick={() => navigate('/')}
-            className="btn-secondary"
+            className="btn-secondary w-full sm:w-auto"
           >
             Cancel
           </button>
-          <button type="submit" className="btn-primary flex items-center space-x-2">
+          <button type="submit" className="btn-primary flex items-center justify-center space-x-2 w-full sm:w-auto">
             <Save size={16} />
             <span>Save Invoice</span>
           </button>
